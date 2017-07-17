@@ -332,6 +332,22 @@
             titleLayer.string = [self attributedTitleAtIndex:idx];
             titleLayer.contentsScale = [[UIScreen mainScreen] scale];
             
+            if (self.cornerRadiusEnable) {
+                CALayer *roundLayer = [CALayer layer];
+                rect = CGRectMake((self.segmentWidth * idx) + self.radiusSpace,
+                                  y - self.verticalOffset,
+                                  self.segmentWidth - self.radiusSpace * 2.0f,
+                                  stringHeight + self.verticalOffset * 2.0f);
+                roundLayer.frame = rect;
+                roundLayer.masksToBounds = true;
+                roundLayer.cornerRadius = CGRectGetHeight(rect)/2.0f;
+                roundLayer.backgroundColor = self.cornerUnSelectColor.CGColor;
+                if (self.selectedSegmentIndex == idx) {
+                    roundLayer.backgroundColor = self.cornerSelectedColor.CGColor;
+                }
+                [self.scrollView.layer addSublayer:roundLayer];
+            }
+            
             [self.scrollView.layer addSublayer:titleLayer];
             
             // Vertical Divider
@@ -631,6 +647,13 @@
     if (self.type == HMSegmentedControlTypeText && self.segmentWidthStyle == HMSegmentedControlSegmentWidthStyleFixed) {
         [self.sectionTitles enumerateObjectsUsingBlock:^(id titleString, NSUInteger idx, BOOL *stop) {
             CGFloat stringWidth = [self measureTitleAtIndex:idx].width + self.segmentEdgeInset.left + self.segmentEdgeInset.right;
+            //TODO radius backgroud
+            if (self.cornerRadiusEnable) {
+                if (stringWidth >= self.segmentWidth - self.horizontalOffset * 2.0f) {
+                    stringWidth += self.horizontalOffset * 2.0f;
+                }
+            }
+            
             self.segmentWidth = MAX(stringWidth, self.segmentWidth);
         }];
     } else if (self.type == HMSegmentedControlTypeText && self.segmentWidthStyle == HMSegmentedControlSegmentWidthStyleDynamic) {
@@ -638,6 +661,14 @@
         
         [self.sectionTitles enumerateObjectsUsingBlock:^(id titleString, NSUInteger idx, BOOL *stop) {
             CGFloat stringWidth = [self measureTitleAtIndex:idx].width + self.segmentEdgeInset.left + self.segmentEdgeInset.right;
+            //TODO radius backgroud
+            //TODO radius backgroud
+            if (self.cornerRadiusEnable) {
+                if (stringWidth >= self.segmentWidth - self.horizontalOffset * 2.0f) {
+                    stringWidth += self.horizontalOffset * 2.0f;
+                }
+            }
+            
             [mutableSegmentWidths addObject:[NSNumber numberWithFloat:stringWidth]];
         }];
         self.segmentWidthsArray = [mutableSegmentWidths copy];
@@ -650,6 +681,13 @@
         //lets just use the title.. we will assume it is wider then images...
         [self.sectionTitles enumerateObjectsUsingBlock:^(id titleString, NSUInteger idx, BOOL *stop) {
             CGFloat stringWidth = [self measureTitleAtIndex:idx].width + self.segmentEdgeInset.left + self.segmentEdgeInset.right;
+            //TODO radius backgroud
+            if (self.cornerRadiusEnable) {
+                if (stringWidth >= self.segmentWidth - 14) {
+                    stringWidth += 14;
+                }
+            }
+            
             self.segmentWidth = MAX(stringWidth, self.segmentWidth);
         }];
     } else if (self.type == HMSegmentedControlTypeTextImages && self.segmentWidthStyle == HMSegmentedControlSegmentWidthStyleDynamic) {

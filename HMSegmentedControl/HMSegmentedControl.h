@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, HMSegmentedControlSelectionStyle) {
     HMSegmentedControlSelectionStyleTextWidthStripe, // Indicator width will only be as big as the text width
     HMSegmentedControlSelectionStyleFullWidthStripe, // Indicator width will fill the whole segment
     HMSegmentedControlSelectionStyleBox, // A rectangle that covers the whole segment
-    HMSegmentedControlSelectionStyleArrow // An arrow in the middle of the segment pointing up or down depending on `HMSegmentedControlSelectionIndicatorLocation`
+    HMSegmentedControlSelectionStyleArrow, // An arrow in the middle of the segment pointing up or down depending on `HMSegmentedControlSelectionIndicatorLocation`
 };
 
 typedef NS_ENUM(NSInteger, HMSegmentedControlSelectionIndicatorLocation) {
@@ -186,6 +186,14 @@ typedef NS_ENUM(NSInteger, HMSegmentedControlType) {
  Default is NO. Set to YES to show a vertical divider between the segments.
  */
 @property(nonatomic, getter = isVerticalDividerEnabled) BOOL verticalDividerEnabled;
+
+
+@property (nonatomic, assign) BOOL cornerRadiusEnable;
+@property (nonatomic, strong) UIColor *cornerUnSelectColor;
+@property (nonatomic, strong) UIColor *cornerSelectedColor;
+@property (nonatomic, assign) CGFloat horizontalOffset;
+@property (nonatomic, assign) CGFloat verticalOffset;
+@property (nonatomic, assign) CGFloat radiusSpace;
 
 /**
  Index of the currently selected segment.
